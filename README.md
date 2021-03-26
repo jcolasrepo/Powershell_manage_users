@@ -1,4 +1,5 @@
 # Powershell_manage_users
-applicatiion powershell pour créer,migrer,supprimer des utilisateurs au sein d'un AD
+application powershell pour créer,migrer,supprimer des utilisateurs au sein d'un AD
 
+compatible windows server 2008 et + 
 Libre d'utilisation 
