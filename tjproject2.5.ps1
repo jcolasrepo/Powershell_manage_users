@@ -52,7 +52,7 @@ Add-Type -AssemblyName PresentationFramework
             <TabControl.Background>
                 <ImageBrush/>
             </TabControl.Background>
-            <TabItem Name="creation_etu" Header="ajouter un utilisateur">
+            <TabItem Name="creation_etu" Header="creation etudiant">
                 <Grid Background="#FFE5E5E5">
                     <Button Name="creation" Content="Valider" HorizontalAlignment="Left" Margin="10,218,0,0" VerticalAlignment="Top" Width="75"/>
                     <TextBox Name="textbox_prenom" HorizontalAlignment="Left" Height="22" Margin="10,46,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
@@ -65,14 +65,14 @@ Add-Type -AssemblyName PresentationFramework
                     <Label Content="Resultat:" HorizontalAlignment="Left" Margin="245,20,0,0" VerticalAlignment="Top" Width="160"/>
                 </Grid>
             </TabItem>
-            <TabItem Name="supp_etu" Header="supp un utilisateur">
+            <TabItem Name="supp_etu" Header="supp etudiant">
 
                 <Grid Background="#FFE5E5E5">
                     <ListBox Name="listbox_etu_supp" HorizontalAlignment="Left" Height="222" Margin="10,10,0,0" VerticalAlignment="Top" Width="220"/>
                     <Button Name="valider_supp" Content="Supprimer" HorizontalAlignment="Left" Margin="290,108,0,0" VerticalAlignment="Top" Width="74"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="migrer un utilisateur" >
+            <TabItem Header="migrer un etudiant" >
 
                 <Grid Background="#FFE5E5E5">
                     <ListBox Name="listbox_tout_etu" HorizontalAlignment="Left" Height="162" Margin="10,78,0,0" VerticalAlignment="Top" Width="120"/>
@@ -83,18 +83,18 @@ Add-Type -AssemblyName PresentationFramework
                     <Label Content="Groupe:" HorizontalAlignment="Left" Margin="285,20,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="creer un groupe d'utilisateur">
+            <TabItem Header="creer un groupe d'étudiant">
 
                 <Grid Background="#FFE5E5E5">
                     <Button Name="Parcourir" Content="Parcourir" HorizontalAlignment="Left" Margin="161,64,0,0" VerticalAlignment="Top" Width="75"/>
                     <ComboBox Name="comboBox_groupe" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Width="120"/>
                     <TextBox Name="textbox_chemin" HorizontalAlignment="Left" Height="24" Margin="10,64,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                     <Button Name="valider_creation_groupe" Content="Valider" HorizontalAlignment="Left" Margin="10,157,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Label Content="liste des utilisateurs(en .csv):" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="180"/>
+                    <Label Content="Chemin:" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="120"/>
                     <Label Content="Groupe:" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" RenderTransformOrigin="-3.079,-0.942" Width="120"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="supp des utilisateurs">
+            <TabItem Header="supp des étudiant">
 
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
@@ -110,7 +110,7 @@ Add-Type -AssemblyName PresentationFramework
                     <Label Content="Resultat:" Grid.Column="1" HorizontalAlignment="Left" Margin="170,220,0,0" VerticalAlignment="Top" Width="186"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="migrer des utilisateurs">
+            <TabItem Header="migrer un groupe">
 
                 <Grid Background="#FFE5E5E5">
                     <ListBox Name="listbox_ancien_groupe" HorizontalAlignment="Left" Height="162" Margin="10,78,0,0" VerticalAlignment="Top" Width="120"/>
@@ -199,7 +199,7 @@ function Recherche{
 #-------------------------------------------------------------------------------------------------------------------------------------------
 #Démarage du script 
 #remplissage des ComboBox
-$ListeGr = "SIO_1","SIO_2","SIO_1_SISR","SIO_1_SLAM","SIO_2_SISR","SIO_2_SLAM" 
+$ListeGr = "RH"  ,"DSI" 
  Foreach ($Usergr in $ListeGr)
     { $combox_creation_etu.Items.Add($Usergr)
     $combox_migration.Items.Add($Usergr)
@@ -214,13 +214,13 @@ $ListeGr = "SIO_1","SIO_2","SIO_1_SISR","SIO_1_SLAM","SIO_2_SISR","SIO_2_SLAM"
     import-module activedirectory
     $domain= Get-ADDomain -Current LocalComputer #nom de l'ordinateur
     $nom_computer= (Get-ADDomainController -Filter * | Select Name).name #nom netbios du domaine
-    $path= "ou=Eleves," + "" + $domain #path ou les modifications auront lieu
+    $path= "ou=Utilisateurs," + "" + $domain #path ou les modifications auront lieu
     $hour = Get-Date -Format "HH:mm"  #on récupe l'heure
     $date = Get-Date -Format "dd/MM/yyyy" #on récupère la date sous la forme "Jour/Mois/Année"
     $domainName=[System.Net.Dns]::GetHostByName($VM).Hostname.split('.')
     $domainName=$domainName[1]+'.'+$domainName[2]
     $userName= [Environment]::UserName
-    $organizationUnitName= (Get-ADOrganizationalUnit -Filter ’Name -like "Eleves"’).Name 
+    $organizationUnitName= (Get-ADOrganizationalUnit -Filter ’Name -like "Utilisateurs"’).Name 
     [void] $listbox_info.Items.Add("Nom de domaine : $domainName") #non netbios du domaine
     [void] $listbox_info.Items.Add("Nom de l'ordinateur: $nom_computer") #nom de l'ordinateur
     [void] $listbox_info.Items.Add("Nom de l'utilisateur: $userName")
@@ -388,13 +388,12 @@ $Form.FindName("valider_creation_groupe").Add_Click( {
                 New-ADUser -Name $nom_complet -GivenName $prenom -DisplayName $nom_complet  -Surname $nom -SamAccountName $session -UserPrincipalName $session -AccountPassword $password -ChangePasswordAtLogon $True -Path $path -Enabled $true
                 Add-ADGroupMember -Identity  $group -Members $nom -PassThru
                  ADD-content -path $fichier -value "$session ajouté à l'AD le $date à $hour" #ajout dans le fichier de log
+                Refresh
+                Recherche
+                Refresh_listbox
             } 
         catch{""}   
-    }
-     Refresh
-     Recherche
-     Refresh_listbox
-                }
+    }}
 })
 #-------------------------------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------
