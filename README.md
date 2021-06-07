@@ -57,7 +57,7 @@ Enable-PSRemoting
 
 pour activer Winrm
 
--Vérifier que les ports 5985(http)et 5986(https) entrant sur le serveur sont autorisés
+-Vérifier que les ports 5985(http)et 5986(https) entrant sur le serveur sont ouverts
 
 -Vérifier que votre client peut se connecter , les clients qui sont dans un groupe de travail(WORKGROUP)devront être ajouté en tant que "trusted host"ou utilisé une connexion en https faire:
 
