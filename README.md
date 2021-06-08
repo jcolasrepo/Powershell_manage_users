@@ -53,7 +53,7 @@ pour afficher la configuration et:
 
 Set-Item WSMan:\localhost\Client\TrustedHosts 192.168.0.1 
 
-ou Set-Item WSMan:\localhost\Client\TrustedHosts CHA_DC_02\test.fr
+ou Set-Item WSMan:\localhost\Client\TrustedHosts Desktop-b25y6ty
 
 ou NON RECOMMANDER Set-Item WSMan:\localhost\Client\TrustedHosts * pour autoriser toutes les connexions
 
