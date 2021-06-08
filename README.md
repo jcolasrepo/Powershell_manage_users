@@ -22,20 +22,6 @@ Le script comprend 6 pannel
 
 application pour gérer les utilisateurs au sein d'un Active Directory Version 2.7
 
-Ajout:
-
--Ajout d'une Recherche par nom des utilisateurs à supprimer et migrer
-
--Pouvoir supprimer/migrer plusieurs utilisateurs en même temps en les selectionnant ensemble.
-
--Possibilité de changer L'UO via une Combobox
-
--correction de Bug Mineur
-
-
-lien vers une documentation plus complète
-
--cours de rédaction.
 
 #Ajout  Version 2.8
 
@@ -43,7 +29,7 @@ lien vers une documentation plus complète
 
 -Ajout de commentaire
 
---Possibilité de de se connecter à distance au script via la technologie WinRM de windows
+-Possibilité de de se connecter à distance au script via la technologie WinRM de windows
 
 WinRM est activé par défault sur les versions windows server 2012 et supérieur pour vérifier si winRM est activer faire:
 
@@ -51,7 +37,7 @@ WinRM est activé par défault sur les versions windows server 2012 et supérieu
 
 Get-Service WinRM
 
-si le status est "running" alors winrm est activer sinon faire:
+Si le status est "running" alors winrm est activer sinon faire:
 
 Enable-PSRemoting
 
